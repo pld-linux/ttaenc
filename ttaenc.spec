@@ -8,8 +8,7 @@ Group:		Applications/Sound
 Source0:	https://downloads.sourceforge.net/tta/%{name}-%{version}-src.tgz
 # Source0-md5:	c9ab8194984b34e7f7bf55d579c97f39
 URL:		https://sourceforge.net/projects/tta/
-#BuildRequires:	-
-#Requires:	-
+BuildRequires:	sed >= 4.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		specflags	-fomit-frame-pointer
@@ -35,6 +34,8 @@ ID3v1/v2 oraz APEv2. Szczegóły formatu można znaleźć pod adresem
 
 %prep
 %setup -q -n %{name}-%{version}-src
+
+%{__sed} -i -e 's/__inline/static inline/' ttaenc.c
 
 %build
 %{__make} \
